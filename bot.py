@@ -5,8 +5,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from flask import Flask
-from threading import Thread
+from utils.keep_alive import keep_alive
 
 from utils.logger import logger
 
@@ -70,18 +69,7 @@ if __name__ == "__main__":
     bot = BardeABiere()
 
     # ─── Hébergement Replit : démarrage du webserver Flask ──────────────────
-    app = Flask(__name__)
-
-    @app.route("/")
-    def home():
-        return "Barde a Biere is alive!"
-
-    def run_web():
-        # Replit exposera le port 3000 par défaut
-        app.run(host="0.0.0.0", port=3000)
-
-    # On lance Flask dans un thread parallèle
-    Thread(target=run_web).start()
+    keep_alive()
 
     # ─── Lancement du bot Discord ──────────────────────────────────────────
 
